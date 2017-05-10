@@ -9,6 +9,17 @@
 
 <script type="text/javascript">
 
+var map = [
+  [0,0,0,0,1,2],
+  [2,0,2,0,2,2],
+  [2,0,2,0,2,2],
+  [1,0,0,0,1,1],
+  [0,0,1,0,0,0],
+  [2,0,2,0,2,2],
+  [2,0,2,0,2,2],
+  [2,0,0,0,0,1]
+]
+
 //Create the renderer
 var renderer = PIXI.autoDetectRenderer(
   540, 720,
@@ -26,15 +37,15 @@ PIXI.loader
   .load(setup);
 
 function setup() {
-  var map = new PIXI.Sprite(
+  var mapimg = new PIXI.Sprite(
     PIXI.loader.resources["Map_Z0002.png"].texture
   );
-  stage.addChild(map);
+  stage.addChild(mapimg);
   renderer.render(stage);
 }
 
 //Tell the `renderer` to `render` the `stage`
-//renderer.render(stage);
+renderer.render(stage);
 
 </script>
 
