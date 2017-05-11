@@ -19,6 +19,12 @@ var map = [
   [2,0,2,0,2,2],
   [2,0,0,0,0,1]
 ]
+var tilecolors = [
+  0x3366ff,
+  0x009922,
+  0x333366,
+  0x333333
+]
 
 //Create the renderer
 var renderer = PIXI.autoDetectRenderer(
@@ -43,6 +49,24 @@ function setup() {
   stage.addChild(mapimg);
   renderer.render(stage);
 }
+
+var tiles = new PIXI.Container();
+
+for(i = 0;i<6;i++) {
+  for(q = 0;q<8;q++) {
+    var tile = new PIXI.Graphics();
+    tile.beginFill(tilecolors[map[q][i]]);
+    tile.alpha = 0.5;
+    tile.lineStyle(4,0x000000,1);
+    tile.drawRect(0,0,90,90);
+    tile.endFill();
+    tile.x = i*90;
+    tile.y = q*90;
+    tiles.addChild(tile);
+  }
+}
+
+stage.addChild(tiles);
 
 //Tell the `renderer` to `render` the `stage`
 renderer.render(stage);
