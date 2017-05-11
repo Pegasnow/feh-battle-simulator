@@ -38,18 +38,6 @@ document.body.appendChild(renderer.view);
 //Create a container object called the `stage`
 var stage = new PIXI.Container();
 
-PIXI.loader
-  .add("Map_Z0002.png")
-  .load(setup);
-
-function setup() {
-  var mapimg = new PIXI.Sprite(
-    PIXI.loader.resources["Map_Z0002.png"].texture
-  );
-  stage.addChild(mapimg);
-  renderer.render(stage);
-}
-
 var tiles = new PIXI.Container();
 
 for(i = 0;i<6;i++) {
@@ -66,7 +54,18 @@ for(i = 0;i<6;i++) {
   }
 }
 
-stage.addChild(tiles);
+PIXI.loader
+  .add("Map_Z0002.png")
+  .load(setup);
+
+function setup() {
+  var mapimg = new PIXI.Sprite(
+    PIXI.loader.resources["Map_Z0002.png"].texture
+  );
+  stage.addChild(mapimg);
+  stage.addChild(tiles);
+  renderer.render(stage);
+}
 
 //Tell the `renderer` to `render` the `stage`
 renderer.render(stage);
