@@ -6,6 +6,10 @@
   </head>
   <script src="pixi.min.js"></script>
   <body>
+    <div style="width: 100%; overflow: hidden;">
+      <div style="width: 540px; float: left;" id="canvasdiv"></div>
+      <div style="margin-left: 560px;"><pre id="output"></pre></div>
+    </div>
 
 <script type="text/javascript">
 
@@ -19,6 +23,24 @@ var map = [
   [2,0,2,0,2,2],
   [2,0,0,0,0,1]
 ]
+
+var maph = map.length;
+var mapw = map[0].length;
+
+var movcost = {
+  inf: [1,2,Infinity,Infinity],
+  cav: [1,Infinity,Infinity,Infinity],
+  arm: [1,1,Infinity,Infinity],
+  fly: [1,1,1,Infinity]
+}
+
+var movbudget = {
+  inf: 2,
+  cav: 3,
+  arm: 1,
+  fly: 2
+}
+
 var tilecolors = [
   0x3366ff,
   0x009922,
@@ -33,12 +55,14 @@ var renderer = PIXI.autoDetectRenderer(
 );
 
 //Add the canvas to the HTML document
-document.body.appendChild(renderer.view);
+document.getElementById('canvasdiv').appendChild(renderer.view);
 
 //Create a container object called the `stage`
 var stage = new PIXI.Container();
 
-var tiles = new PIXI.Container();
+var Tiles = new PIXI.Container();
+var Tiles_walk = new PIXI.Container();
+var spr_Lucina;
 
 for(i = 0;i<6;i++) {
   for(q = 0;q<8;q++) {
@@ -50,25 +74,217 @@ for(i = 0;i<6;i++) {
     tile.endFill();
     tile.x = i*90;
     tile.y = q*90;
-    tiles.addChild(tile);
+    Tiles.addChild(tile);
   }
 }
 
 PIXI.loader
-  .add("Map_Z0002.png")
+  .add("https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/Map_Z0002.png")
+  .add("https://hydra-media.cursecdn.com/feheroes.gamepedia.com/thumb/5/57/Icon_Portrait_Lucina.png/90px-Icon_Portrait_Lucina.png")
   .load(setup);
 
 function setup() {
   var mapimg = new PIXI.Sprite(
-    PIXI.loader.resources["Map_Z0002.png"].texture
+    PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/Map_Z0002.png"].texture
+  );
+  spr_Lucina = new PIXI.Sprite(
+    PIXI.loader.resources["https://hydra-media.cursecdn.com/feheroes.gamepedia.com/thumb/5/57/Icon_Portrait_Lucina.png/90px-Icon_Portrait_Lucina.png"].texture
   );
   stage.addChild(mapimg);
-  stage.addChild(tiles);
+
+  stage.addChild(Tiles);
+
+  renderWalkable(Units[0]);
+  stage.addChild(Tiles_walk);
+
+  spr_Lucina.x=Units[0].pos[0]*90;
+  spr_Lucina.y=Units[0].pos[1]*90;
+  stage.addChild(spr_Lucina);
+
   renderer.render(stage);
+}
+
+function random(max,min) {
+  if(!isNaN(parseFloat(min)) || !isFinite(min)){
+    min = 0;
+  }
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function gameLoop() {
+  requestAnimationFrame(gameLoop);
+  if(random(200)==0){
+    Units[0].pos[0]=random(mapw);
+    Units[0].pos[1]=random(maph);
+    spr_Lucina.x=Units[0].pos[0]*90;
+    spr_Lucina.y=Units[0].pos[1]*90;
+    renderWalkable(Units[0]);
+  }
+  renderer.render(stage);
+}
+
+function out()
+{
+    var args = Array.prototype.slice.call(arguments, 0);
+    document.getElementById('output').innerHTML += args.join(" ") + "\n";
+}
+
+function updateWalkable(unit){
+  unit.walkable = Path.walkable(unit);
+}
+function renderWalkable(unit){
+  Tiles_walk.removeChildren();
+  updateWalkable(unit);
+  for(i = 0;i<6;i++) {
+    for(q = 0;q<8;q++) {
+      if(unit.walkable[q][i] === false){
+        continue;
+      }
+      var tile = new PIXI.Graphics();
+      tile.beginFill(0xeeeeff);
+      tile.alpha = 0.5;
+      tile.drawRect(0,0,60,60);
+      tile.endFill();
+      tile.x = 15+(i*90);
+      tile.y = 15+(q*90);
+      Tiles_walk.addChild(tile);
+    }
+  }
+}
+
+var Units = [
+  {
+    name: "Lucina",
+    mov: "inf",
+    pos: [3,3]
+  }
+]
+
+function display2dArray(source){
+  var outString = "";
+  for(i=0;i<source.length;i++){
+    for(q=0;q<source[0].length;q++){
+      dispChar = source[i][q];
+      if(dispChar === Infinity || dispChar === false){dispChar = "#";}
+      if(dispChar === true){dispChar = ".";}
+      outString+=dispChar;
+    }
+    outString+="\n";
+  }
+  out(outString);
+}
+
+function new2dArray(x,y,init){
+//  if(init === undefined){
+//    init = 
+//  }
+  var outerArray = [];
+  for(i=0;i<y;i++){
+    var innerArray = [];
+    for(q=0;q<x;q++){
+      innerArray.push(init);
+    }
+    outerArray.push(innerArray);
+  }
+  return outerArray;
+}
+
+display2dArray(map);
+display2dArray(new2dArray(mapw,maph,"#"));
+
+var Path = {};
+
+Path.walkable = function(unit){ //dijkstra
+  var pathmap = new2dArray(mapw,maph,Infinity);
+  var sptset = new2dArray(mapw,maph,false);
+  var result = unit.pos;
+  pathmap[result[1]][result[0]] = 0;
+  while(result != false){
+    sptset[result[1]][result[0]] = true;
+    var pointcost = pathmap[result[1]][result[0]];
+    for(i=0;i<4;i++){
+      var checkPoint = Path.cardinalStep([result[0],result[1]],i);
+      if(checkPoint == false || sptset[checkPoint[1]][checkPoint[0]] != false){
+        continue;
+      }
+      var newpointcost = pointcost + movcost[unit.mov][map[checkPoint[1]][checkPoint[0]]]
+      if(newpointcost <= movbudget[unit.mov]
+      && newpointcost < pathmap[checkPoint[1]][checkPoint[0]]){
+        pathmap[checkPoint[1]][checkPoint[0]] = newpointcost;
+      }
+    }
+    result = Path.next(pathmap,sptset,movbudget[unit.mov])
+    //display2dArray(pathmap);
+  }
+  //display2dArray(pathmap);
+  for(i=0;i<maph;i++){
+    for(q=0;q<mapw;q++){
+      switch(pathmap[i][q]){
+        case Infinity:
+          pathmap[i][q] = false;
+          break;
+        default:
+          pathmap[i][q] = true;
+      }
+    }
+  }
+  return pathmap;
+}
+
+Path.cardinalStep = function(point,dir){
+  switch(dir){
+    case 0:
+      if(point[0] >= maph-1){
+        return false;
+      }
+      point[0]++
+      break;
+    case 1:
+      if(point[1] >= mapw-1){
+        return false;
+      }
+      point[1]++
+      break;
+    case 2:
+      if(point[0] <= 0){
+        return false;
+      }
+      point[0]--
+      break;
+    case 3:
+      if(point[1] <= 0){
+        return false;
+      }
+      point[1]--
+      break;
+    default:
+  }
+  return point;
+}
+
+Path.next = function(pathmap,sptset,budget){
+  var min = Infinity;
+  var minPoint = false;
+  for(i=0;i<maph;i++){
+    for(q=0;q<mapw;q++){
+      var ptCost = pathmap[i][q];
+      //if(ptCost == "#"){
+      //  ptCost = Infinity;
+      //}
+      if(sptset[i][q]==false
+      && ptCost < min
+      && ptCost < budget){
+        min = ptCost;
+        minPoint = [q,i];
+      }
+    }
+  }
+  return minPoint;
 }
 
 //Tell the `renderer` to `render` the `stage`
 renderer.render(stage);
+gameLoop();
 
 </script>
 
