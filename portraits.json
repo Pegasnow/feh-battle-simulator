@@ -2268,12 +2268,10 @@
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.png",
+	"image": "portraits.png",
 	"format": "RGBA8888",
 	"size": {"w":1102,"h":1102},
 	"scale": "1",
 	"smartupdate": "$TexturePacker:SmartUpdate:34f748f3c450f171bb52f7db8d83e091:d76d75ef26664984f2233d38f56cf684:b2f80d7af41902736d3ed02ec88e31a6$"
 }
 }
->>>>>>> origin/master
->>>>>>> origin/master
