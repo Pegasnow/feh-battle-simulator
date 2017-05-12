@@ -22,7 +22,6 @@ class Unit {
       }
       this.hp_current = this.hp;
       this.mov = base.mov;
-<<<<<<< HEAD
       this.unitname = base.unitname;
       //out(JSON.stringify(PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"]));
       //out("\n")
@@ -36,11 +35,6 @@ class Unit {
       .on('pointerupoutside', releaseUnit)
       .on('pointermove',dragUnit);
       this.sprite.dragging = false;
-=======
-      this.name = base.unitname;
-      out(JSON.stringify(PIXI.loader.resources["portraits.json"]));
-      this.sprite = new PIXI.Sprite(PIXI.loader.resources["portraits.json"].textures[base.unitname+".png"]);
->>>>>>> origin/master
       this.pos = [0,0];
       this.sprite.classdata = this;
     }
