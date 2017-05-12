@@ -23,14 +23,15 @@ class Unit {
       this.hp_current = this.hp;
       this.mov = base.mov;
       this.name = base.unitname;
-      this.sprite = new PIXI.Sprite(U.portraits[base.unitname]);
+      out(JSON.stringify(PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"]));
+      //this.sprite = new PIXI.Sprite(PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"].textures[base.unitname]);
       this.pos = [0,0];
     }
   }
   setPos(x,y){
     this.pos = [x,y];
-    this.sprite.x = x*90;
-    this.sprite.y = y*90;
+    //this.sprite.x = x*90;
+    //this.sprite.y = y*90;
   }
 }
 
@@ -103,14 +104,14 @@ for(i = 0;i<6;i++) {
 
 PIXI.loader
   .add("https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/Map_Z0002.png")
-  .add("portraits.json")
+  .add("https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json")
   .load(setup);
 
 function setup() {
 
   Units[0] = new Unit("Lucina");
   Units[0].setPos(1,3);
-  Layer_units.addChild(Units[0].sprite);
+  //Layer_units.addChild(Units[0].sprite);
 
   var mapimg = new PIXI.Sprite(
     PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/Map_Z0002.png"].texture
@@ -309,7 +310,7 @@ Path.next = function(pathmap,sptset,budget){
 
 var U = {};
 
-U.portraits = PIXI.loader.resources["portraits.json"].textures; 
+U.portraits = PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"].frames; 
 
 U.statmap = [
   "hp","atk","spd","def","res"
