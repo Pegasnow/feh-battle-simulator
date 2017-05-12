@@ -2267,7 +2267,7 @@
 "meta": {
 	"app": "http://www.codeandweb.com/texturepacker",
 	"version": "1.0",
-	"image": "portraits.png",
+	"image": "https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.png",
 	"format": "RGBA8888",
 	"size": {"w":1102,"h":1102},
 	"scale": "1",
