@@ -26,7 +26,7 @@ class Unit {
       //out(JSON.stringify(PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"]));
       //out("\n")
       //console.log(PIXI.TextureCache);
-      this.sprite = new PIXI.Sprite(PIXI.loader.resources["https://raw.githubusercontent.com/Pegasnow/feh-battle-simulator/master/portraits.json"].textures[base.unitname+".png"]);
+      this.sprite = new PIXI.Sprite(PIXI.loader.resources["portraits.json"].textures[base.unitname+".png"]);
       this.sprite.interactive = true;
       this.sprite.anchor.set(0.5);
       this.sprite
@@ -462,8 +462,6 @@ Path.next = function(pathmap,sptset,budget){
 //////////////////////////////////////////////////
 
 var U = {};
-
-U.portraits = PIXI.loader.resources["portraits.json"].frames; 
 
 U.statmap = [
   "hp","atk","spd","def","res"
