@@ -1,6 +1,6 @@
 {"frames": {
 
-"sword.png":
+"Sword.png":
 {
 	"frame": {"x":2,"y":2,"w":56,"h":56},
 	"rotated": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"lance.png":
+"Lance.png":
 {
 	"frame": {"x":60,"y":2,"w":56,"h":56},
 	"rotated": false,
@@ -18,7 +18,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"axe.png":
+"Axe.png":
 {
 	"frame": {"x":118,"y":2,"w":56,"h":56},
 	"rotated": false,
@@ -27,7 +27,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"bow.png":
+"Bow.png":
 {
 	"frame": {"x":176,"y":2,"w":56,"h":56},
 	"rotated": false,
@@ -36,7 +36,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"rtome.png":
+"RTome.png":
 {
 	"frame": {"x":2,"y":60,"w":56,"h":56},
 	"rotated": false,
@@ -45,7 +45,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"btome.png":
+"BTome.png":
 {
 	"frame": {"x":60,"y":60,"w":56,"h":56},
 	"rotated": false,
@@ -54,7 +54,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"gtome.png":
+"GTome.png":
 {
 	"frame": {"x":118,"y":60,"w":56,"h":56},
 	"rotated": false,
@@ -63,7 +63,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"dagger.png":
+"Dagger.png":
 {
 	"frame": {"x":176,"y":60,"w":56,"h":56},
 	"rotated": false,
@@ -72,7 +72,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"rbreath.png":
+"RBreath.png":
 {
 	"frame": {"x":2,"y":118,"w":56,"h":56},
 	"rotated": false,
@@ -81,7 +81,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"bbreath.png":
+"BBreath.png":
 {
 	"frame": {"x":60,"y":118,"w":56,"h":56},
 	"rotated": false,
@@ -90,7 +90,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"gbreath.png":
+"GBreath.png":
 {
 	"frame": {"x":118,"y":118,"w":56,"h":56},
 	"rotated": false,
@@ -99,7 +99,7 @@
 	"sourceSize": {"w":56,"h":56},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"staff.png":
+"Staff.png":
 {
 	"frame": {"x":176,"y":118,"w":56,"h":56},
 	"rotated": false,
